@@ -1,0 +1,77 @@
+{
+  "name": "prismy-cookie",
+  "version": "0.0.0",
+  "description": "Cookie for prismy",
+  "keywords": [
+    "prismy",
+    "cookie"
+  ],
+  "author": "Junyoung Choi <fluke8259@gmail.com>",
+  "homepage": "https://github.com/BoostIO/prismy-cookie",
+  "license": "MIT",
+  "main": "dist",
+  "files": [
+    "dist/**/*",
+    "!dist/specs/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BoostIO/prismy-cookie.git"
+  },
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "lint": "prettier --check src/**/*.ts examples/*/src/**/*.ts",
+    "format": "prettier --write src/**/*.ts examples/*/src/**/*.ts",
+    "test": "ava --verbose",
+    "test-ci": "nyc ava && nyc report --reporter=text-lcov > coverage.lcov",
+    "codecov": "codecov",
+    "prepublishOnly": "npm run build"
+  },
+  "bugs": {
+    "url": "https://github.com/BoostIO/prismy-cookie/issues"
+  },
+  "devDependencies": {
+    "@types/cookie": "^0.3.3",
+    "@types/got": "^9.4.4",
+    "@types/node": "^12.0.2",
+    "@types/test-listen": "^1.1.0",
+    "@types/tough-cookie": "^2.3.5",
+    "ava": "^1.4.1",
+    "codecov": "^3.5.0",
+    "got": "^9.6.0",
+    "micro": "^9.3.5-canary.1",
+    "nyc": "^14.1.1",
+    "prettier": "^1.17.1",
+    "prismy": "^0.4.1",
+    "prismy-test-server": "^0.1.1",
+    "rimraf": "^2.6.3",
+    "test-listen": "^1.1.0",
+    "tough-cookie": "^3.0.1",
+    "ts-node": "^8.2.0",
+    "tslib": "^1.9.3",
+    "typescript": "^3.4.5"
+  },
+  "peerDependencies": {
+    "prismy": "^0.3.0"
+  },
+  "dependencies": {
+    "cookie": "^0.4.0"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "files": [
+      "src/specs/*"
+    ],
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ]
+  }
+}
