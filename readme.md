@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.com/BoostIO/prismy-cookie.svg?branch=master)](https://travis-ci.com/BoostIO/prismy-cookie)
 [![codecov](https://codecov.io/gh/BoostIO/prismy-cookie/branch/master/graph/badge.svg)](https://codecov.io/gh/BoostIO/prismy-cookie)
-[![NPM download](https://img.shields.io/npm/dm/prismy-cookie.svg)](https://www.npmjs.com/package/tachijs)
+[![NPM download](https://img.shields.io/npm/dm/prismy-cookie.svg)](https://www.npmjs.com/package/prismy-cookie)
 [![Supported by BoostIO](https://github.com/BoostIO/boostio-materials/raw/master/v1/boostio-shield-v1.svg?sanitize=true)](https://boostio.co)
 
 ```ts
