@@ -1,4 +1,4 @@
-# `prismy-test-server`
+# `prismy-cookie`
 
 :cookie: Cookie for [prismy](https://github.com/BoostIO/prismy).
 
