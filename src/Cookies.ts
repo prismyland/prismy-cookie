@@ -1,9 +1,7 @@
 import cookie from 'cookie'
 import { createInjectDecorators, Selector } from 'prismy'
 
-export interface CookiesOptions {
-  decode?: (value: string) => string
-}
+export type CookiesOptions = cookie.CookieParseOptions
 
 export function createCookiesSelector(options?: CookiesOptions): Selector<any> {
   return (req, res) => {

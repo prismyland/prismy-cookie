@@ -1,7 +1,7 @@
-import cookie, { CookieSerializeOptions } from 'cookie'
+import cookie from 'cookie'
 import { createInjectDecorators, Selector } from 'prismy'
 
-export type SetCookieOptions = CookieSerializeOptions
+export type SetCookieOptions = cookie.CookieSerializeOptions
 
 export type CookieSetter = (
   ...cookies: Array<[string, string, SetCookieOptions] | [string, string]>
