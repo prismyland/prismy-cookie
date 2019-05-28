@@ -22,6 +22,28 @@ class Handler extends BaseHandler {
 export default prismy(Handler)
 ```
 
+## APIs
+
+### `@SetCookie()`
+
+Injects cookie setter.
+
+#### `CookieSetter`
+
+`(...cokies: Array<[string, string, SetCookieOptions] | [string, string]>) => void`
+
+Set cookie. Each cookie tuple should be like `['name', 'value', options]`. It will serialize cookie via `cookie.serialize` with options.
+
+#### `SetCookieOptions`
+
+Same to `CookieSerializeOptions` of `cookie`.
+
+### `@Cookies(options?: CookiesOptions)`
+
+Injects parsed cookies. It is parsing cookie via `cookie.parse`
+
+#### `CookiesOptions`
+
 ## License
 
 MIT
