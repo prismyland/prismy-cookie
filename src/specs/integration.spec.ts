@@ -3,22 +3,19 @@ import got from 'got'
 import { testServer } from 'prismy-test-server'
 import { CookieJar } from 'tough-cookie'
 import { BaseHandler, Method, createJsonBodySelector } from 'prismy'
-import { Cookies, SetCookie, CookieSetter } from '..'
+import { Cookie, CookieStore } from '..'
 
 test('integration test', async t => {
   class Handler extends BaseHandler {
-    async execute(
-      @Method() method: string,
-      @SetCookie() setCookie: CookieSetter,
-      @Cookies() cookies: any
-    ) {
+    async execute(@Method() method: string, @Cookie() cookie: CookieStore) {
       if (method === 'POST') {
         const { message } = await this.select(createJsonBodySelector())
-        setCookie(['message', message])
+        cookie.set(['message', message])
 
         return 'Saved!'
       }
-      return cookies.message
+
+      return cookie.get().message
     }
   }
 
