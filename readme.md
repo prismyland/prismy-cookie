@@ -17,21 +17,17 @@ npm i prismy-cookie
 
 ```ts
 import { BaseHandler, Method, createJsonBodySelector } from 'prismy'
-import { Cookies, SetCookie, CookieSetter } from 'prismy-cookie'
+import { Cookie, CookieStore } from 'prismy-cookie'
 
 class Handler extends BaseHandler {
-  async execute(
-    @Method() method: string,
-    @SetCookie() setCookie: CookieSetter,
-    @Cookies() cookies: any
-  ) {
+  async execute(@Method() method: string, @Cookie() cookie: CookieStore) {
     if (method === 'POST') {
       const { message } = await this.select(createJsonBodySelector())
-      setCookie(['message', message])
+      cookie.set(['message', message])
 
       return 'Saved!'
     }
-    return cookies.message
+    return cookie.get().message
   }
 }
 
@@ -40,27 +36,35 @@ export default prismy(Handler)
 
 ## APIs
 
-### `@SetCookie()`
+### @Cookie()
 
-Injects cookie setter.
+Inject `CookieStore`.
 
-#### `CookieSetter`
+### `new CookieStore()`
 
-`(...cokies: Array<[string, string, SetCookieOptions] | [string, string]>) => void`
+#### `CookieStore#get(options?: CookiesOptions)`
 
-Set cookie. Each cookie tuple should be like `['name', 'value', options]`. It will serialize cookie via `cookie.serialize` with options.
+Select and parse cookies from request. Newly set cookies are not shown in here.
 
-#### `SetCookieOptions`
+#### `CookieParseOptions`
 
-Same to `CookieSerializeOptions` of `cookie`.
+Type alias of `CookieParseOptions` of `cookie` package.
 
-### `@Cookies(options?: CookiesOptions)`
+#### `CookieStore#set(...cookies: Array<[string, string, CookieSerializeOptions] | [string, string])`
 
-Injects parsed cookies. It is parsing cookie via `cookie.parse`
+Set cookies.
 
-#### `CookiesOptions`
+#### `CookieSerializeOptions`
 
-Same to `CookieParseOptions` of `cookie`.
+Type alias of `CookieSerializeOptions` of `cookie` package.
+
+### `new MockCookieStore(...cookies: Array<[string, string, CookieSerializeOptions] | [string, string]>)`
+
+Cookie store for unit testing.
+
+#### `MockCookieStore#newCookies: Array<[string, string, CookieSerializeOptions] | [string, string]>`
+
+All cookies called by `CookieStore#set`.
 
 ## License
 
