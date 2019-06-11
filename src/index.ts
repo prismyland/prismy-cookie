@@ -11,7 +11,6 @@ export function createCookieSelector(
   options: DefaultCookieOptions = {}
 ): Selector<any> {
   return (req, res) => {
-    console.log(req.headers)
     return new InternalCookieStore(req, res, options)
   }
 }
