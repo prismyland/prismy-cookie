@@ -7,7 +7,7 @@ import { Cookie, CookieStore } from '..'
 
 test('integration test', async t => {
   class Handler extends BaseHandler {
-    async execute(@Method() method: string, @Cookie() cookie: CookieStore) {
+    async handle(@Method() method: string, @Cookie() cookie: CookieStore) {
       if (method === 'POST') {
         const { message } = await this.select(createJsonBodySelector())
         cookie.set(['message', message])

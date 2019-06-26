@@ -8,7 +8,7 @@ import cookie from 'cookie'
 
 test('CookieStore#get returns received cookies', async t => {
   class Handler extends BaseHandler {
-    async execute(@Cookie() cookies: CookieStore) {
+    async handle(@Cookie() cookies: CookieStore) {
       return cookies.get()
     }
   }
@@ -30,7 +30,7 @@ test('CookieStore#get returns received cookies', async t => {
 
 test('CookieStore#get returns empty object if cookie does not exist ', async t => {
   class Handler extends BaseHandler {
-    async execute(@Cookie() cookies: CookieStore) {
+    async handle(@Cookie() cookies: CookieStore) {
       return cookies.get()
     }
   }
@@ -46,7 +46,7 @@ test('CookieStore#get returns empty object if cookie does not exist ', async t =
 
 test('it replaces decode function', async t => {
   class Handler extends BaseHandler {
-    async execute(@Cookie() cookies: any) {
+    async handle(@Cookie() cookies: any) {
       return cookies.get({
         decode: (value: string) => decodeURIComponent(value) + '123'
       }).message
