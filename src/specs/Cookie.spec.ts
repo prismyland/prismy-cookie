@@ -30,8 +30,8 @@ test('CookieStore#get returns received cookies', async t => {
 
 test('CookieStore#get returns empty object if cookie does not exist ', async t => {
   class Handler extends BaseHandler {
-    async handle(@Cookie() cookies: CookieStore) {
-      return cookies.get()
+    async handle(@Cookie() cookie: CookieStore) {
+      return cookie.get()
     }
   }
 
@@ -46,8 +46,8 @@ test('CookieStore#get returns empty object if cookie does not exist ', async t =
 
 test('CookieStore#get accepts custom decode function', async t => {
   class Handler extends BaseHandler {
-    async handle(@Cookie() cookies: any) {
-      return cookies.get({
+    async handle(@Cookie() cookie: CookieStore) {
+      return cookie.get({
         decode: (value: string) => decodeURIComponent(value) + '123'
       }).message
     }
@@ -62,5 +62,43 @@ test('CookieStore#get accepts custom decode function', async t => {
     })
 
     t.is(response.body, 'Hello, World!123')
+  })
+})
+
+test('Cookie#set sets cookie', async t => {
+  class Handler extends BaseHandler {
+    async handle(@Cookie() cookie: CookieStore) {
+      cookie.set(['message', 'Hello, World!'])
+
+      return 'OK'
+    }
+  }
+
+  await testServer(Handler, async url => {
+    const response = await got.get(url)
+
+    t.deepEqual(response.headers['set-cookie'], [
+      `message=${encodeURIComponent('Hello, World!')}`
+    ])
+  })
+})
+
+test.only('Cookie#set appends cookie if other cookies are already set', async t => {
+  class Handler extends BaseHandler {
+    async handle(@Cookie() cookie: CookieStore) {
+      cookie.set(['message', 'Hello, World!'])
+      cookie.set(['message2', 'Hello, World2!'])
+
+      return 'OK'
+    }
+  }
+
+  await testServer(Handler, async url => {
+    const response = await got.get(url)
+
+    t.deepEqual(response.headers['set-cookie'], [
+      `message=${encodeURIComponent('Hello, World!')}`,
+      `message2=${encodeURIComponent('Hello, World2!')}`
+    ])
   })
 })

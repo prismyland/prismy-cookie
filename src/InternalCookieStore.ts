@@ -28,10 +28,16 @@ export class InternalCookieStore implements CookieStore {
       [string, string, CookieSerializeOptions] | [string, string]
     >
   ) {
+    const presetSerializedCookies = this.res.getHeader('Set-Cookie') as
+      | string[]
+      | undefined
     const serializedCookies = cookies.map(([key, value, options]) => {
       return cookie.serialize(key, value, options)
     })
 
-    this.res.setHeader('Set-Cookie', serializedCookies)
+    this.res.setHeader('Set-Cookie', [
+      ...(presetSerializedCookies != null ? presetSerializedCookies : []),
+      ...serializedCookies
+    ])
   }
 }
