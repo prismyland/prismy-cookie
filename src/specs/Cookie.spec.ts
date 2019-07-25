@@ -83,7 +83,7 @@ test('Cookie#set sets cookie', async t => {
   })
 })
 
-test.only('Cookie#set appends cookie if other cookies are already set', async t => {
+test('Cookie#set appends cookie if other cookies are already set', async t => {
   class Handler extends BaseHandler {
     async handle(@Cookie() cookie: CookieStore) {
       cookie.set(['message', 'Hello, World!'])
