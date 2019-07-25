@@ -1,11 +1,11 @@
 # `prismy-cookie`
 
-:cookie: Cookie for [prismy](https://github.com/BoostIO/prismy).
+:cookie: Cookie for [prismy](https://github.com/prismyland/prismy).
 
-[![Build Status](https://travis-ci.com/BoostIO/prismy-cookie.svg?branch=master)](https://travis-ci.com/BoostIO/prismy-cookie)
-[![codecov](https://codecov.io/gh/BoostIO/prismy-cookie/branch/master/graph/badge.svg)](https://codecov.io/gh/BoostIO/prismy-cookie)
+[![Build Status](https://travis-ci.com/prismyland/prismy-cookie.svg?branch=master)](https://travis-ci.com/prismyland/prismy-cookie)
+[![codecov](https://codecov.io/gh/prismyland/prismy-cookie/branch/master/graph/badge.svg)](https://codecov.io/gh/prismyland/prismy-cookie)
 [![NPM download](https://img.shields.io/npm/dm/prismy-cookie.svg)](https://www.npmjs.com/package/prismy-cookie)
-[![Supported by BoostIO](https://github.com/BoostIO/boostio-materials/raw/master/v1/boostio-shield-v1.svg?sanitize=true)](https://boostio.co)
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/prismyland/prismy-cookie.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/prismyland/prismy-cookie/context:javascript)
 
 ## Installation
 
