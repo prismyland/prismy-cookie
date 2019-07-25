@@ -44,7 +44,7 @@ test('CookieStore#get returns empty object if cookie does not exist ', async t =
   })
 })
 
-test('it replaces decode function', async t => {
+test('CookieStore#get accepts custom decode function', async t => {
   class Handler extends BaseHandler {
     async handle(@Cookie() cookies: any) {
       return cookies.get({
