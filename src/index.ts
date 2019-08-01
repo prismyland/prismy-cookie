@@ -6,18 +6,14 @@ export * from './MockCookieStore'
 
 const cookieStoreSymbol = Symbol('prismy-cookie')
 
-export function createCookieSelector(): Selector<CookieStore> {
-  return context => {
-    let cookieStore = context[cookieStoreSymbol]
-    if (cookieStore == null) {
-      context[cookieStoreSymbol] = cookieStore = new InternalCookieStore(
-        context
-      )
-    }
-    return cookieStore
+export const cookieSelector: Selector<CookieStore> = context => {
+  let cookieStore = context[cookieStoreSymbol]
+  if (cookieStore == null) {
+    context[cookieStoreSymbol] = cookieStore = new InternalCookieStore(context)
   }
+  return cookieStore
 }
 
 export function Cookie() {
-  return createInjectDecorators(createCookieSelector())
+  return createInjectDecorators(cookieSelector)
 }
