@@ -39,23 +39,20 @@
     "ava": "^1.4.1",
     "codecov": "^3.5.0",
     "got": "^9.6.0",
-    "micro": "^9.3.5-canary.1",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
-    "prismy-test-server": "^0.1.1",
+    "prismy": "^0.11.0",
+    "prismy-test-server": "^0.3.0",
     "rimraf": "^2.6.3",
-    "test-listen": "^1.1.0",
     "tough-cookie": "^3.0.1",
     "ts-node": "^8.2.0",
-    "tslib": "^1.9.3",
     "typescript": "^3.4.5"
   },
   "peerDependencies": {
-    "prismy": "^0.3.0"
+    "prismy": "^0.11.0"
   },
   "dependencies": {
-    "cookie": "^0.4.0",
-    "prismy": "^0.8.0"
+    "cookie": "^0.4.0"
   },
   "ava": {
     "compileEnhancements": false,
