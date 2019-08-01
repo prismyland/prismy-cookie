@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'http'
+import { Context } from 'prismy'
 import cookie from 'cookie'
 import {
   CookieStore,
@@ -6,21 +6,14 @@ import {
   CookieSerializeOptions
 } from './CookieStore'
 
-export type DefaultCookieOptions = CookieParseOptions & CookieSerializeOptions
-
 export class InternalCookieStore implements CookieStore {
-  constructor(
-    private req: IncomingMessage,
-    private res: ServerResponse,
-    private defaultOptions: DefaultCookieOptions
-  ) {}
+  constructor(private context: Context) {}
 
   get(options?: CookieParseOptions) {
     options = {
-      ...this.defaultOptions,
       ...options
     }
-    return cookie.parse(this.req.headers.cookie || '', options)
+    return cookie.parse(this.context.req.headers.cookie || '', options)
   }
 
   set(
@@ -28,14 +21,14 @@ export class InternalCookieStore implements CookieStore {
       [string, string, CookieSerializeOptions] | [string, string]
     >
   ) {
-    const presetSerializedCookies = this.res.getHeader('Set-Cookie') as
+    const presetSerializedCookies = this.context.res.getHeader('Set-Cookie') as
       | string[]
       | undefined
     const serializedCookies = cookies.map(([key, value, options]) => {
       return cookie.serialize(key, value, options)
     })
 
-    this.res.setHeader('Set-Cookie', [
+    this.context.res.setHeader('Set-Cookie', [
       ...(presetSerializedCookies != null ? presetSerializedCookies : []),
       ...serializedCookies
     ])

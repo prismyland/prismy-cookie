@@ -1,18 +1,20 @@
 import { createInjectDecorators, Selector } from 'prismy'
-import {
-  DefaultCookieOptions,
-  InternalCookieStore
-} from './InternalCookieStore'
+import { InternalCookieStore } from './InternalCookieStore'
 import { CookieStore } from './CookieStore'
 export * from './CookieStore'
 export * from './MockCookieStore'
-export { DefaultCookieOptions }
 
-export function createCookieSelector(
-  options: DefaultCookieOptions = {}
-): Selector<CookieStore> {
-  return ({ req, res }) => {
-    return new InternalCookieStore(req, res, options)
+const cookieStoreSymbol = Symbol('prismy-cookie')
+
+export function createCookieSelector(): Selector<CookieStore> {
+  return context => {
+    let cookieStore = context[cookieStoreSymbol]
+    if (cookieStore == null) {
+      context[cookieStoreSymbol] = cookieStore = new InternalCookieStore(
+        context
+      )
+    }
+    return cookieStore
   }
 }
 

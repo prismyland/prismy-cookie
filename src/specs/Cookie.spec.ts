@@ -102,3 +102,18 @@ test('Cookie#set appends cookie if other cookies are already set', async t => {
     ])
   })
 })
+
+test('Cookie reuses a instantiated CookieStore if available', async t => {
+  class Handler extends BaseHandler {
+    async handle(
+      @Cookie() cookie: CookieStore,
+      @Cookie() cookie2: CookieStore
+    ) {
+      return JSON.stringify(cookie === cookie2)
+    }
+  }
+  await testServer(Handler, async url => {
+    const response = await got.get(url)
+    t.deepEqual(response.body, 'true')
+  })
+})
