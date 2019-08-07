@@ -41,7 +41,7 @@
     "got": "^9.6.0",
     "nyc": "^14.1.1",
     "prettier": "^1.17.1",
-    "prismy": "^0.11.0",
+    "prismy": "^0.13.0",
     "prismy-test-server": "^0.3.0",
     "rimraf": "^2.6.3",
     "tough-cookie": "^3.0.1",
