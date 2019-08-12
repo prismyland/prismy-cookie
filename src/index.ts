@@ -11,6 +11,8 @@ import {
   updateHeaders
 } from 'prismy'
 
+export { CookieParseOptions, CookieSerializeOptions }
+
 export type ParsedCookies = { [key: string]: string }
 
 export function createCookiesSelector(
