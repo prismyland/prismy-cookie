@@ -16,55 +16,37 @@ npm i prismy-cookie
 ## Usage
 
 ```ts
-import { BaseHandler, Method, createJsonBodySelector } from 'prismy'
-import { Cookie, CookieStore } from 'prismy-cookie'
+import {
+  prismy,
+  res,
+  createUrlEncodedBodySelector,
+  methodSelector,
+  contextSelector,
+  Context
+} from 'prismy'
+import {
+  createCookiesSelector,
+  ParsedCookies,
+  appendCookie
+} from 'prismy-cookie'
 
-class Handler extends BaseHandler {
-  async execute(@Method() method: string, @Cookie() cookie: CookieStore) {
+const urlEncodedBodySelector = createUrlEncodedBodySelector()
+const cookiesSelector = createCookiesSelector()
+const handler = prismy<[string | undefined, ParsedCookies, Context]>(
+  [methodSelector, cookiesSelector, contextSelector],
+  async (method, cookies, context) => {
     if (method === 'POST') {
-      const { message } = await this.select(createJsonBodySelector())
-      cookie.set(['message', message])
+      const { message } = await urlEncodedBodySelector(context)
 
-      return 'Saved!'
+      return appendCookie(res('OK!'), ['message', message as string])
     }
-    return cookie.get().message
+
+    return res(cookies.message)
   }
-}
+)
 
-export default prismy(Handler)
+export default prismy(handler)
 ```
-
-## APIs
-
-### @Cookie()
-
-Inject `CookieStore`.
-
-### `new CookieStore()`
-
-#### `CookieStore#get(options?: CookiesOptions)`
-
-Select and parse cookies from request. Newly set cookies are not shown in here.
-
-#### `CookieParseOptions`
-
-Type alias of `CookieParseOptions` of `cookie` package.
-
-#### `CookieStore#set(...cookies: Array<[string, string, CookieSerializeOptions] | [string, string])`
-
-Set cookies.
-
-#### `CookieSerializeOptions`
-
-Type alias of `CookieSerializeOptions` of `cookie` package.
-
-### `new MockCookieStore(...cookies: Array<[string, string, CookieSerializeOptions] | [string, string]>)`
-
-Cookie store for unit testing.
-
-#### `MockCookieStore#newCookies: Array<[string, string, CookieSerializeOptions] | [string, string]>`
-
-All cookies called by `CookieStore#set`.
 
 ## License
 
