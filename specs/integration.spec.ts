@@ -6,16 +6,15 @@ import {
   res,
   createUrlEncodedBodySelector,
   methodSelector,
-  contextSelector,
-  Context
+  contextSelector
 } from 'prismy'
 import { testHandler } from 'prismy-test'
-import { createCookiesSelector, ParsedCookies, appendCookie } from '../src'
+import { createCookiesSelector, appendCookie } from '../src'
 
 test('integration test', async t => {
   const urlEncodedBodySelector = createUrlEncodedBodySelector()
   const cookiesSelector = createCookiesSelector()
-  const handler = prismy<[string | undefined, ParsedCookies, Context]>(
+  const handler = prismy(
     [methodSelector, cookiesSelector, contextSelector],
     async (method, cookies, context) => {
       if (method === 'POST') {
