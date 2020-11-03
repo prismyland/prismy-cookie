@@ -2,13 +2,13 @@ import {
   parse,
   serialize,
   CookieParseOptions,
-  CookieSerializeOptions
+  CookieSerializeOptions,
 } from 'cookie'
 import {
   SyncSelector,
   headersSelector,
   ResponseObject,
-  updateHeaders
+  updateHeaders,
 } from 'prismy'
 
 export { CookieParseOptions, CookieSerializeOptions }
@@ -19,7 +19,7 @@ export function createCookiesSelector(
   options: CookieParseOptions = {}
 ): SyncSelector<ParsedCookies> {
   const cookiesSymbol = Symbol('prismy-cookie')
-  return context => {
+  return (context) => {
     let parsedCookie = context[cookiesSymbol] as ParsedCookies | undefined
     if (parsedCookie == null) {
       context[cookiesSymbol] = parsedCookie = parse(
@@ -36,7 +36,7 @@ export function setCookie<B>(
   ...cookies: Array<[string, string, CookieSerializeOptions] | [string, string]>
 ): ResponseObject<B> {
   return updateHeaders(resObject, {
-    'set-cookie': serializeCookies(...cookies)
+    'set-cookie': serializeCookies(...cookies),
   })
 }
 
@@ -48,7 +48,7 @@ export function appendCookie<B>(
     (resObject.headers['set-cookie'] as string[] | undefined) || []
 
   return updateHeaders(resObject, {
-    'set-cookie': [...presetCookieHeaderList, ...serializeCookies(...cookies)]
+    'set-cookie': [...presetCookieHeaderList, ...serializeCookies(...cookies)],
   })
 }
 

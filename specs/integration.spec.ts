@@ -6,12 +6,12 @@ import {
   res,
   createUrlEncodedBodySelector,
   methodSelector,
-  contextSelector
+  contextSelector,
 } from 'prismy'
 import { testHandler } from 'prismy-test'
 import { createCookiesSelector, appendCookie } from '../src'
 
-test('integration test', async t => {
+test('integration test', async (t) => {
   const urlEncodedBodySelector = createUrlEncodedBodySelector()
   const cookiesSelector = createCookiesSelector()
   const handler = prismy(
@@ -19,7 +19,6 @@ test('integration test', async t => {
     async (method, cookies, context) => {
       if (method === 'POST') {
         const { message } = await urlEncodedBodySelector(context)
-
         return appendCookie(res('OK!'), ['message', message as string])
       }
 
@@ -27,17 +26,19 @@ test('integration test', async t => {
     }
   )
 
-  await testHandler(handler, async url => {
+  await testHandler(handler, async (url) => {
     const cookieJar = new CookieJar()
-    const postResponse = await got.post(url, {
+    const postResponse = await got(url, {
+      method: 'POST',
       cookieJar,
-      form: true,
-      body: { message: 'Hello, World!' }
+      form: {
+        message: 'Hello, World!',
+      },
     })
     t.is(postResponse.body, 'OK!')
 
-    const getResponse = await got.get(url, {
-      cookieJar
+    const getResponse = await got(url, {
+      cookieJar,
     })
     t.is(getResponse.body, 'Hello, World!')
   })
