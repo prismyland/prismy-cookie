@@ -44,8 +44,7 @@ export function appendCookie<B>(
   resObject: ResponseObject<B>,
   ...cookies: Array<[string, string, CookieSerializeOptions] | [string, string]>
 ): ResponseObject<B> {
-  const presetCookieHeaderList =
-    (resObject.headers['set-cookie'] as string[] | undefined) || []
+  const presetCookieHeaderList = getSetCookieHeader(resObject)
 
   return updateHeaders(resObject, {
     'set-cookie': [...presetCookieHeaderList, ...serializeCookies(...cookies)],
@@ -56,4 +55,12 @@ function serializeCookies(
   ...cookies: Array<[string, string, CookieSerializeOptions] | [string, string]>
 ) {
   return cookies.map(([key, value, options]) => serialize(key, value, options))
+}
+
+function getSetCookieHeader<B>(resObject: ResponseObject<B>): string[] {
+  if (resObject?.headers == null || resObject?.headers['set-cookie'] == null) {
+    return []
+  }
+
+  return resObject.headers['set-cookie'] as string[]
 }
